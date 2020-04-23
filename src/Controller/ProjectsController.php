@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Project;
 use App\Entity\Task;
+use App\Form\AddProjectType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,6 +26,29 @@ class ProjectsController extends AbstractController
         return $this->render('projects/projects-list.html.twig', [
             'controller_name' => 'ManagerController',
             'projects' => $projects
+        ]);
+    }
+    /**
+     * @Route("/manager/project/add", name="project-add")
+     */
+    public function projectAdd(Request $request, SerializerInterface $serializer)
+    {
+        $project = new Project();
+
+        $projectForm = $this->createForm(AddProjectType::class, $project);
+        $projectForm->handleRequest($request);
+
+        if ($projectForm->isSubmitted() && $projectForm->isValid()) {
+            $project->setStartedAt(new \DateTime());
+            $project->setStatus("Nouveau");
+
+            $this->getDoctrine()->getManager()->persist($project);
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('projects-list');
+        }
+
+        return $this->render('projects/project-add.html.twig', [
+            'projectForm' => $projectForm->createView()
         ]);
     }
     /**

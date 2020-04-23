@@ -2,6 +2,7 @@
 
 
 {% block body %}
+	<a href="{{ path('project-add') }}">Ajouter un projet</a>
 	<table>
 		<thead>
 			<tr>
@@ -21,7 +22,7 @@
 						{{ project.tasks |length }}
 					</td>
 					<td>
-						{{ project.startedAt|date('d-m-Y H:i:s') }}
+						{{ project.startedAt|date('d/m/Y') }}
 					</td>
 					<td>
 						<a href="{{ path('project-detail', {id: project.id}) }}">Gérer le projet</a>
