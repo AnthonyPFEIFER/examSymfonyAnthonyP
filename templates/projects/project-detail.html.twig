@@ -28,25 +28,25 @@
 
 
 	</div>
-	<a href="{{ path('project-add') }}">Ajouter un projet</a>
-	<table>
-		<thead>
+	<a href="{{ path('task-add', {id: project.id}) }}">Ajouter une tâche</a>
+</a>
+<table>
+	<thead>
+		<tr>
+			<th>Nom de la tâche</th>
+			<th>Description</th>
+			<th>Ajoutée le</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for task in tasks %}
 			<tr>
-				<th>Nom de la tâche</th>
-				<th>Description</th>
-				<th>Ajoutée le</th>
+				<td>{{ task.title }}</td>
+				<td>{{ task.description }}</td>
+				<td>
+					{{ task.createdAt|date('d/m/Y') }}
+				</td>
 			</tr>
-		</thead>
-		<tbody>
-			{% for task in tasks %}
-				<tr>
-					<td>{{ task.title }}</td>
-					<td>{{ task.description }}</td>
-					<td>
-						{{ task.createdAt|date('d/m/Y') }}
-					</td>
-				</tr>
-			{% endfor %}
-		</tbody>
+		{% endfor %}
 	</tbody>
-</table>{% endblock %}
+</tbody></table>{% endblock %}

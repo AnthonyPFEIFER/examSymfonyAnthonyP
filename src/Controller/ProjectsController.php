@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Project;
 use App\Entity\Task;
 use App\Form\AddProjectType;
+use App\Form\AddTaskType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -68,6 +69,32 @@ class ProjectsController extends AbstractController
             'project' => $project,
             'projects' => $projects,
             'tasks' => $tasks
+        ]);
+    }
+    /**
+     * @Route("/manager/project/{id}/task/add", name="task-add")
+     */
+    public function taskAdd(Request $request, SerializerInterface $serializer, $id)
+    {
+
+        $projectRepository = $this->getDoctrine()->getRepository(Project::class);
+        $project = $projectRepository->findOneBy(['id' => $id]);
+
+        $task = new Task();
+        $taskForm = $this->createForm(AddTaskType::class, $task);
+        $taskForm->handleRequest($request);
+
+        if ($taskForm->isSubmitted() && $taskForm->isValid()) {
+            $task->setCreatedAt(new \DateTime());
+            $task->setProjectId($project);
+
+            $this->getDoctrine()->getManager()->persist($task);
+            $this->getDoctrine()->getManager()->flush();
+        }
+
+        return $this->render('projects/task-add.html.twig', [
+            'taskForm' => $taskForm->createView(),
+            'project' => $project
         ]);
     }
 }
