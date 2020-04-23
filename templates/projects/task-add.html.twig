@@ -3,6 +3,7 @@
 
 {% block body %}
 	<h1>
-		Ajouter une tâche
+		Ajouter une tâche au projet
+		{{ project.name }}
 	</h1>
 	{{ form(taskForm) }}{% endblock %}
