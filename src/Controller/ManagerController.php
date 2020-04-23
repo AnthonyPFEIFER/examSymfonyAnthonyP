@@ -9,13 +9,4 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class ManagerController extends AbstractController
 {
-    /**
-     * @Route("/manager/projects", name="projects")
-     */
-    public function projects(Request $request, SerializerInterface $serializer)
-    {
-        return $this->render('manager/index.html.twig', [
-            'controller_name' => 'ManagerController',
-        ]);
-    }
 }

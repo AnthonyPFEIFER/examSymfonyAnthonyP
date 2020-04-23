@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+	<table>
+		<thead>
+			<tr>
+				<th>Nom du Projet</th>
+				<th>Statut</th>
+				<th>Tâches</th>
+				<th>Ajouté le</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for project in projects %}
+				<tr>
+					<td>{{ project.name }}</td>
+					<td>{{ project.status }}</td>
+					<td>
+						{{ project.tasks |length }}
+					</td>
+					<td>
+						{{ project.startedAt|date('d-m-Y H:i:s') }}
+					</td>
+					<td>
+						<a href="{{ path('project-detail', {id: project.id}) }}">Gérer le projet</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</tbody>
+</table>{% endblock %}

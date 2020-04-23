@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Project;
 use App\Entity\Task;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -18,7 +19,14 @@ class TaskRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Task::class);
     }
-
+    public function countTasksByProject(Project $project)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('COUNT(t.id)')
+            ->where('t.project = :project')
+            ->setParameter(':project', $project)
+            ->getQuery()->getSingleScalarResult();
+    }
     // /**
     //  * @return Task[] Returns an array of Task objects
     //  */
