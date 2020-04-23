@@ -21,10 +21,6 @@ class ApiController extends AbstractController
         $projects = $projectRepository->findAll();
         $serializedProjects = $serializer->serialize($projects, 'json');
         return new JsonResponse($serializedProjects, 200, [], true);
-
-        return $this->render('api/index.html.twig', [
-            'controller_name' => 'ApiController',
-        ]);
     }
 
     /**
