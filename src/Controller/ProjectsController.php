@@ -54,10 +54,20 @@ class ProjectsController extends AbstractController
     /**
      * @Route("/manager/project/{id}", name="project-detail")
      */
-    public function projectDetail(Request $request, SerializerInterface $serializer)
+    public function projectDetail(Request $request, SerializerInterface $serializer, $id)
     {
+        $projectRepository = $this->getDoctrine()->getRepository(Project::class);
+        $project = $projectRepository->find($id);
+        $projects = $projectRepository->findAll();
+        $taskRepository = $this->getDoctrine()->getRepository(Task::class);
+        $tasks = $taskRepository->findBy(['project_id' => $id]);
+
+
         return $this->render('projects/project-detail.html.twig', [
-            'controller_name' => 'ManagerController'
+            'controller_name' => 'ManagerController',
+            'project' => $project,
+            'projects' => $projects,
+            'tasks' => $tasks
         ]);
     }
 }

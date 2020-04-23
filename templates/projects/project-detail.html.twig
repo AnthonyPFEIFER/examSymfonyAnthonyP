@@ -1,4 +1,52 @@
 {% extends 'base.html.twig' %}
 
 
-{% block body %}{% endblock %}
+{% block body %}
+
+	<h1>{{ project.name }}</h1>
+	<h5>Créé le
+		{{ project.startedAt|date('d/m/Y') }}
+	</h5>
+	<h5>
+		{{ project.tasks|length }}
+		Tâche(s) assignée(s) à ce Projet
+	</h5>
+	<div>
+
+		{# TODO #}
+		<form action="" method="post">
+			Statut :
+			<select name="status">
+				{% for project in projects %}
+					<option value="{{ project.id }}">
+						{{project.status}}
+					</option>
+				{% endfor %}
+			</select>
+			<input type="submit" value="Changer">
+		</form>
+
+
+	</div>
+	<a href="{{ path('project-add') }}">Ajouter un projet</a>
+	<table>
+		<thead>
+			<tr>
+				<th>Nom de la tâche</th>
+				<th>Description</th>
+				<th>Ajoutée le</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for task in tasks %}
+				<tr>
+					<td>{{ task.title }}</td>
+					<td>{{ task.description }}</td>
+					<td>
+						{{ task.createdAt|date('d/m/Y') }}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</tbody>
+</table>{% endblock %}
