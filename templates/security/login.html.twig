@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!
+{% endblock %}
+
+{% block body %}
+	<form method="post">
+		{% if error %}
+			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+		{% endif %}
+
+		{% if app.user %}
+			<div class="mb-3">
+				Vous êtes connecté en tant que
+				{{ app.user.username }},
+				<a href="{{ path('app_logout') }}">Se déconnecter</a>
+			</div>
+		{% endif %}
+
+		<h1 class="h3 mb-3 font-weight-normal">Veuillez vous connecter si vous êtes un Manager qualifié.</h1>
+		<label for="inputUsername">Votre nom</label>
+		<input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" required autofocus>
+		<label for="inputPassword">Votre mot de passe</label>
+		<input type="password" name="password" id="inputPassword" class="form-control" required>
+
+		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+
+		<button class="btn btn-lg btn-primary" type="submit">
+			Parlez Ami et entrez.
+		</button>
+	</form>
+{% endblock %}
