@@ -10,6 +10,13 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
+     * @Route("/", name="home")
+     */
+    public function index()
+    {
+        return $this->render('index.html.twig', []);
+    }
+    /**
      * @Route("/login", name="app_login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
